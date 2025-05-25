@@ -8,19 +8,19 @@ import { Button } from "@/components/ui/button";
 
 const images = [
   {
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/achievements1.jpeg?height=800&width=1200",
     alt: "Slide 1",
   },
   {
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/achievements2.jpeg?height=800&width=1200",
     alt: "Slide 2",
   },
   {
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/achievements3.jpeg?height=800&width=1200",
     alt: "Slide 3",
   },
   {
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/achievements4.jpeg?height=800&width=1200",
     alt: "Slide 4",
   },
 ];

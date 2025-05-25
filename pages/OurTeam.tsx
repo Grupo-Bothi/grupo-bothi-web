@@ -5,22 +5,22 @@ export default function NuestroEquipo() {
     {
       name: "DREW WEBER",
       role: "Fundador",
-      image: "/placeholder.svg?height=600&width=450",
+      image: "/equipo1.jpeg?height=600&width=450",
     },
     {
       name: "JAYA DIXON",
       role: "Gerente de proyectos",
-      image: "/placeholder.svg?height=600&width=450",
+      image: "/equipo2.jpeg?height=600&width=450",
     },
     {
       name: "REESE PLATT",
       role: "Contratista general",
-      image: "/placeholder.svg?height=600&width=450",
+      image: "/equipo3.jpeg?height=600&width=450",
     },
     {
       name: "JAMIE KOKOT",
       role: "Ingeniero de construcción",
-      image: "/placeholder.svg?height=600&width=450",
+      image: "/equipo4.jpeg?height=600&width=450",
     },
   ];
 

@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <Header />
       <div className="flex min-h-[80vh] items-center justify-center bg-[#2547a0]">
-        <div className="w-[80%] h-[60vh]">
+        <div className="w-[80%] h-[60vh] mt-10">
           <Achievements />
         </div>
       </div>

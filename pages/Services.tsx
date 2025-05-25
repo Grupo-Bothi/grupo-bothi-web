@@ -74,6 +74,13 @@ const electricalServices: ElectricalService[] = [
       "Regular inspection and maintenance to prevent electrical issues and ensure safety compliance.",
     price: "Starting at $120",
   },
+    {
+    icon: <Wrench className="h-10 w-10 text-primary" />,
+    title: "Unas caguamas",
+    description:
+      "Regular inspection and maintenance to prevent electrical issues and ensure safety compliance.",
+    price: "Starting at $120",
+  },
 ];
 
 export default function Services() {

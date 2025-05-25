@@ -8,7 +8,7 @@ export default function AreYouReady() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="rounded-lg overflow-hidden">
             <Image
-              src="/placeholder.svg?height=600&width=500"
+              src="/areReady1.jpeg?height=600&width=500"
               width={500}
               height={600}
               alt="Electrician working on a building"
