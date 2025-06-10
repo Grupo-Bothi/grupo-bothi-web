@@ -25,7 +25,7 @@ const images = [
   },
 ];
 
-export function Achievements() {
+const Achievements = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToPrevious = () => {
@@ -105,4 +105,5 @@ export function Achievements() {
       </div>
     </div>
   );
-}
+};
+export default Achievements;

@@ -13,44 +13,83 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { useMediaQuery } from "../hooks/use-media-query";
 
-// Sample services data - replace with your actual services
 const services = [
   {
     id: 1,
-    title: "Web Development",
-    description: "Custom websites and web applications",
+    title: "Instalaciones eléctricas",
+    description: "la casa blanca",
     imageUrl: "/trabajo1.jpeg?height=400&width=600",
     width: 600,
     height: 400,
   },
   {
     id: 2,
-    title: "Mobile App Design",
-    description: "iOS and Android applications",
+    title: "Instalaciones eléctricas",
+    description: "bar 'Jamadi'",
     imageUrl: "/trabajo2.jpeg?height=500&width=400",
     width: 400,
     height: 500,
   },
   {
     id: 3,
-    title: "E-commerce Solutions",
-    description: "Online stores and payment systems",
+    title: "Instalaciones eléctricas",
+    description: "bar 'el despecho' Pachuca",
     imageUrl: "/trabajo3.jpeg?height=350&width=650",
     width: 650,
     height: 350,
   },
   {
     id: 4,
-    title: "Brand Identity",
-    description: "airs, color schemes, and brand guidelines",
+    title: "Instalaciones eléctricas",
+    description: "residecial las lomas de la plata",
     imageUrl: "/trabajo4.jpeg?height=450&width=450",
     width: 450,
     height: 450,
   },
   {
     id: 5,
-    title: "UI/UX Design",
-    description: "User-centered interface design",
+    title: "Aire acondicionado",
+    description: "escuela primaria Benito Juarez",
+    imageUrl: "/trabajo5.jpeg?height=380&width=580",
+    width: 580,
+    height: 380,
+  },
+  {
+    id: 6,
+    title: "Aire acondicionado",
+    description: "escuela primaria Benito Juarez",
+    imageUrl: "/trabajo5.jpeg?height=380&width=580",
+    width: 580,
+    height: 380,
+  },
+  {
+    id: 7,
+    title: "Aire acondicionado",
+    description: "escuela primaria Benito Juarez",
+    imageUrl: "/trabajo5.jpeg?height=380&width=580",
+    width: 580,
+    height: 380,
+  },
+  {
+    id: 8,
+    title: "Aire acondicionado",
+    description: "escuela primaria Benito Juarez",
+    imageUrl: "/trabajo5.jpeg?height=380&width=580",
+    width: 580,
+    height: 380,
+  },
+  {
+    id: 9,
+    title: "Aire acondicionado",
+    description: "escuela primaria Benito Juarez",
+    imageUrl: "/trabajo5.jpeg?height=380&width=580",
+    width: 580,
+    height: 380,
+  },
+  {
+    id: 10,
+    title: "Aire acondicionado",
+    description: "escuela primaria Benito Juarez",
     imageUrl: "/trabajo5.jpeg?height=380&width=580",
     width: 580,
     height: 380,
@@ -77,7 +116,7 @@ export default function WorkDone() {
   }, [api]);
 
   return (
-    <div className="w-full max-w-7xl mx-auto py-12 px-4 sm:px-6 bg-white">
+    <div className="w-full max-w-9/10 mx-auto py-12 px-4 sm:px-6 bg-white">
       <h2 className="text-3xl font-bold text-center mb-2">
         Nuestros Proyectos
       </h2>

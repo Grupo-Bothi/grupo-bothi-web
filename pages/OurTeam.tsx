@@ -3,23 +3,43 @@ import Image from "next/image";
 export default function NuestroEquipo() {
   const teamMembers = [
     {
-      name: "DREW WEBER",
+      name: "Juan Carlos Bothi",
       role: "Fundador",
-      image: "/equipo1.jpeg?height=600&width=450",
+      image: "/equipo5.jpeg?height=600&width=450",
     },
     {
-      name: "JAYA DIXON",
-      role: "Gerente de proyectos",
+      name: "Mario Lopez",
+      role: "Contratista general",
+      image: "/equipo6.jpeg?height=600&width=450",
+    },
+    {
+      name: "Kevin Flores",
+      role: "Contratista general",
       image: "/equipo2.jpeg?height=600&width=450",
     },
     {
-      name: "REESE PLATT",
+      name: "Kevin Flores",
+      role: "Contratista general",
+      image: "/equipo2.jpeg?height=600&width=450",
+    },
+    {
+      name: "Kevin Flores",
+      role: "Contratista general",
+      image: "/equipo2.jpeg?height=600&width=450",
+    },
+    {
+      name: "Santiago Pastor",
+      role: "Contratista general",
+      image: "/equipo1.jpeg?height=600&width=450",
+    },
+    {
+      name: "Santiago Pastor",
       role: "Contratista general",
       image: "/equipo3.jpeg?height=600&width=450",
     },
     {
-      name: "JAMIE KOKOT",
-      role: "Ingeniero de construcción",
+      name: "Kevin Flores",
+      role: "Contratista general",
       image: "/equipo4.jpeg?height=600&width=450",
     },
   ];

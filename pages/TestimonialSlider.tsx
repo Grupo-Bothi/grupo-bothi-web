@@ -5,12 +5,12 @@ import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Sample testimonials data
+
 const testimonials = [
   {
     quote:
       "El equipo se aseguró de que nuestra casa se construyera según las normas de eficiencia energética de nuestra ciudad. ¡Nos encanta nuestra nueva casa!",
-    author: "Emmett Marsh",
+    author: "Diana Perez",
   },
   {
     quote:

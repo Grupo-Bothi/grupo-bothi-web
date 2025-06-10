@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import type React from "react";
 import {
   Card,
@@ -8,78 +9,53 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  Lightbulb,
-  Zap,
-  Home,
-  Factory,
-  AlertTriangle,
+  AirVent,
   Wrench,
   Phone,
   Clock,
+  Hammer,
+  ShowerHead,
 } from "lucide-react";
 import Contact from "./Contact";
 
-// Define the service type
 interface ElectricalService {
   icon: React.ReactNode;
   title: string;
   description: string;
-  price?: string;
+  subDescription?: string;
   emergency?: boolean;
 }
 
-// Sample electrical services data
 const electricalServices: ElectricalService[] = [
   {
-    icon: <Home className="h-10 w-10 text-primary" />,
-    title: "Residential Wiring",
+    icon: <Wrench className="h-10 w-10 text-primary" />,
+    title: "Instalaciones Electricas",
     description:
-      "Complete home electrical installations and rewiring services for new and existing properties.",
-    price: "Starting at $150",
-  },
-  {
-    icon: <Lightbulb className="h-10 w-10 text-primary" />,
-    title: "Lighting Installation",
-    description:
-      "Professional installation of indoor and outdoor lighting fixtures, ceiling fans, and smart lighting systems.",
-    price: "Starting at $85",
-  },
-  {
-    icon: <Zap className="h-10 w-10 text-primary" />,
-    title: "Electrical Repairs",
-    description:
-      "Quick and reliable repairs for outlets, switches, circuit breakers, and other electrical components.",
-    price: "Starting at $95",
+      "Expertos en diseño, instalación y mantenimiento de sistemas eléctricos residenciales, comerciales e industriales. Garantizamos soluciones seguras, eficientes y cumpliendo con los más altos estándares de calidad.",
+    subDescription: "💡 ¡Iluminamos tus proyectos con energía confiable!",
     emergency: true,
   },
   {
-    icon: <Factory className="h-10 w-10 text-primary" />,
-    title: "Commercial Services",
+    icon: <AirVent className="h-10 w-10 text-primary" />,
+    title: "Aire Acondicionado",
     description:
-      "Comprehensive electrical solutions for offices, retail spaces, and industrial facilities.",
-    price: "Custom quote",
+      "Ofrecemos instalación, mantenimiento y reparación de sistemas de climatización para hogares, oficinas y locales comerciales. Garantizamos ambientes frescos y eficiencia energética con equipos de última tecnología.",
+    subDescription: "❄️ ¡Tu confort, nuestra prioridad!",
   },
   {
-    icon: <AlertTriangle className="h-10 w-10 text-primary" />,
-    title: "Emergency Services",
+    icon: <Hammer className="h-10 w-10 text-primary" />,
+    title: "Plomería",
     description:
-      "24/7 emergency electrical repairs to keep your home or business safe and operational.",
-    price: "Starting at $150",
+      "Servicios profesionales de instalación, reparación y mantenimiento en sistemas de tuberías, fugas, drenajes y más. Soluciones rápidas y eficientes para hogares y negocios.",
+    subDescription: "🚿 ¡Instalaciones, reparaciones y mantenimiento!",
     emergency: true,
   },
   {
-    icon: <Wrench className="h-10 w-10 text-primary" />,
-    title: "Electrical Maintenance",
+    icon: <ShowerHead className="h-10 w-10 text-primary" />,
+    title: "Calentadores Solares",
     description:
-      "Regular inspection and maintenance to prevent electrical issues and ensure safety compliance.",
-    price: "Starting at $120",
-  },
-    {
-    icon: <Wrench className="h-10 w-10 text-primary" />,
-    title: "Unas caguamas",
-    description:
-      "Regular inspection and maintenance to prevent electrical issues and ensure safety compliance.",
-    price: "Starting at $120",
+      "Instalación y mantenimiento de sistemas solares para agua caliente. Ahorra energía y reduce costos con tecnología eco-amigable. ¡Soluciones sustentables para tu hogar o negocio!",
+    subDescription: "☀️ Energía limpia, eficiente y al mejor precio.",
   },
 ];
 
@@ -94,8 +70,12 @@ export default function Services() {
           Nuestros Servicios
         </h2>
         <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-          Professional, licensed electricians providing reliable electrical
-          services for residential and commercial properties.
+          "Expertos en: ⚡ Electricidad | ❄️ Climatización | 💧 Plomería | ☀️
+          Energía solar
+        </p>
+        <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+          ¿Problemas en tu hogar o negocio? ¡Contáctanos para servicio rápido y
+          profesional!"
         </p>
         <div className="flex items-center justify-center gap-4 mt-6">
           <div className="flex items-center">
@@ -120,7 +100,7 @@ export default function Services() {
                 <div className="mb-4">{service.icon}</div>
                 {service.emergency && (
                   <Badge variant="destructive" className="ml-2">
-                    24/7 Emergency
+                    Soporte 24/7
                   </Badge>
                 )}
               </div>
@@ -130,8 +110,8 @@ export default function Services() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {service.price && (
-                <p className="font-medium text-lg">{service.price}</p>
+              {service.subDescription && (
+                <p className="font-medium text-lg">{service.subDescription}</p>
               )}
             </CardContent>
           </Card>
@@ -142,7 +122,7 @@ export default function Services() {
         <p className="text-muted-foreground mb-4">
           ¿Necesita un servicio que no figura en la lista anterior?
         </p>
-        <Contact className={'gap-2'} />
+        <Contact className={"gap-2"} />
       </div>
     </div>
   );
