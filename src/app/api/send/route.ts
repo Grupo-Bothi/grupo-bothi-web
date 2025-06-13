@@ -5,7 +5,7 @@ import MessageBusinessEmail from "@/components/emails-messages/EmailBusinessMess
 import MessageUserEmail from "@/components/emails-messages/EmailUserMessage";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const fromEmail = process.env.NEXT_PUBLIC_RESEND_CONTACT_EMAIL
+const fromEmail = "grupobothi2019@gmail.com";
 
 interface EmailResponse {
   data?: any;
