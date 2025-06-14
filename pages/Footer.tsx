@@ -35,7 +35,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4" />
-                <span>42327, El Dextho, Ixmiquilpan, Mexico</span>
+                <span>Carretera Tasquillo-Ixmiquilpan Panales, 42326 Ixmiquilpan, Hgo.</span>
               </li>
             </ul>
             <Contact className={"gap-2"} />

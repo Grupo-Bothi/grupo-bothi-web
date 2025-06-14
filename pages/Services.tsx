@@ -43,19 +43,19 @@ const electricalServices: ElectricalService[] = [
     subDescription: "❄️ ¡Tu confort, nuestra prioridad!",
   },
   {
+    icon: <ShowerHead className="h-10 w-10 text-primary" />,
+    title: "Calentadores Solares",
+    description:
+      "Instalación y mantenimiento de sistemas solares para agua caliente. Ahorra energía y reduce costos con tecnología eco-amigable. ¡Soluciones sustentables para tu hogar o negocio!",
+    subDescription: "☀️ Energía limpia, eficiente y al mejor precio.",
+  },
+  {
     icon: <Hammer className="h-10 w-10 text-primary" />,
     title: "Plomería",
     description:
       "Servicios profesionales de instalación, reparación y mantenimiento en sistemas de tuberías, fugas, drenajes y más. Soluciones rápidas y eficientes para hogares y negocios.",
     subDescription: "🚿 ¡Instalaciones, reparaciones y mantenimiento!",
     emergency: true,
-  },
-  {
-    icon: <ShowerHead className="h-10 w-10 text-primary" />,
-    title: "Calentadores Solares",
-    description:
-      "Instalación y mantenimiento de sistemas solares para agua caliente. Ahorra energía y reduce costos con tecnología eco-amigable. ¡Soluciones sustentables para tu hogar o negocio!",
-    subDescription: "☀️ Energía limpia, eficiente y al mejor precio.",
   },
 ];
 
