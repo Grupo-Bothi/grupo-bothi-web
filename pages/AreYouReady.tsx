@@ -1,5 +1,5 @@
 import Image from "next/image";
-// import Contact from "./Contact";
+import Contact from "./Contact";
 
 export default function AreYouReady() {
   return (
@@ -25,7 +25,7 @@ export default function AreYouReady() {
               un proyecto creativo para compartir con el mundo.
             </p>
 
-            {/* <Contact className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-8 py-6 rounded-full text-lg" /> */}
+            <Contact className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-8 py-6 rounded-full text-lg" />
           </div>
         </div>
       </div>

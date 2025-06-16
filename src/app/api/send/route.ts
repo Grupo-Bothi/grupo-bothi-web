@@ -6,6 +6,7 @@ import MessageUserEmail from "@/components/emails-messages/EmailUserMessage";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const fromEmail = "grupobothi2019@gmail.com";
+const noReplyDomain = "no-reply@grupobothi.com";
 
 interface EmailResponse {
   data?: any;
@@ -38,14 +39,14 @@ export async function POST(req: NextRequest) {
     const [businessEmail, userEmail]: [EmailResponse, EmailResponse] =
       await Promise.all([
         resend.emails.send({
-          from: `Grupo Bothi <${fromEmail}>`,
+          from: `Grupo Bothi <${noReplyDomain}>`,
           to: [`${fromEmail}`],
           subject: `Nuevo mensaje de contacto de ${name}`,
           react: MessageBusinessEmail({ name, email, phone, message }),
           replyTo: email,
         }),
         resend.emails.send({
-          from: `Grupo Bothi <${fromEmail}>`,
+          from: `Grupo Bothi <${noReplyDomain}>`,
           to: [email],
           subject: `Hemos recibido tu mensaje - ${name}`,
           react: MessageUserEmail({ name, email, message }),

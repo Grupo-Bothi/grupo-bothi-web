@@ -37,8 +37,7 @@ export default function MessageUserEmail({
             <Text className="text-gray-700">Hola {name},</Text>
             <Text className="text-gray-700">
               Hemos recibido tu mensaje y nos pondremos en contacto contigo lo
-              antes posible. Normalmente respondemos en un plazo de 24-48 horas
-              laborables.
+              antes posible. Normalmente respondemos en un plazo de 24-48 horas.
             </Text>
             <Section className="bg-gray-50 p-4 rounded-md my-6">
               <Text className="text-gray-700 font-medium">Tu mensaje:</Text>
