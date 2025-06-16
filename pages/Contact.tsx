@@ -33,6 +33,7 @@ interface ContactProps {
 type FormInput = {
   name: string;
   email: string;
+  phone: string;
   message: string;
 };
 
@@ -99,6 +100,16 @@ export default function Contact({ className }: ContactProps) {
             required
             placeholder="Email"
             {...register("email")}
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="email">Télefono</Label>
+          <Input
+            id="Télefono"
+            type="tel"
+            required
+            placeholder="Télefono"
+            {...register("phone")}
           />
         </div>
         <div className="grid gap-2">

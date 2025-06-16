@@ -16,12 +16,14 @@ import { Tailwind } from "@react-email/tailwind";
 type MessageBusinessEmailProps = {
   name: string;
   email: string;
+  phone: string;
   message: string;
 };
 
 const MessageBusinessEmail = ({
   name,
   email,
+  phone,
   message,
 }: MessageBusinessEmailProps) => {
   return (
@@ -48,6 +50,13 @@ const MessageBusinessEmail = ({
                 <Column>
                   <Text className="text-gray-700">
                     <strong>Email:</strong> {email}
+                  </Text>
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <Text className="text-gray-700">
+                    <strong>Télefono:</strong> {phone}
                   </Text>
                 </Column>
               </Row>

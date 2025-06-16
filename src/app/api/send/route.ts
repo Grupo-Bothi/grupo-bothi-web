@@ -18,7 +18,7 @@ interface EmailResponse {
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, message } = await req.json();
+    const { name, email, phone, message } = await req.json();
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -41,13 +41,13 @@ export async function POST(req: NextRequest) {
           from: `Grupo Bothi <${fromEmail}>`,
           to: [`${fromEmail}`],
           subject: `Nuevo mensaje de contacto de ${name}`,
-          react: MessageBusinessEmail({ name, email, message }),
+          react: MessageBusinessEmail({ name, email, phone, message }),
           replyTo: email,
         }),
         resend.emails.send({
           from: `Grupo Bothi <${fromEmail}>`,
           to: [email],
-          subject: `Hemos recibido tu mensaje - Grupo Bothi ${email}`,
+          subject: `Hemos recibido tu mensaje - ${name}`,
           react: MessageUserEmail({ name, email, message }),
         }),
       ]);
