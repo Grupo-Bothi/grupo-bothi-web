@@ -16,7 +16,7 @@ import {
   Hammer,
   ShowerHead,
 } from "lucide-react";
-import Contact from "./Contact";
+// import Contact from "./Contact";
 
 interface ElectricalService {
   icon: React.ReactNode;
@@ -122,7 +122,7 @@ export default function Services() {
         <p className="text-muted-foreground mb-4">
           ¿Necesita un servicio que no figura en la lista anterior?
         </p>
-        <Contact className={"gap-2"} />
+        {/* <Contact className={"gap-2"} /> */}
       </div>
     </div>
   );

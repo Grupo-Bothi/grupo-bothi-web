@@ -1,7 +1,7 @@
 "use client";
 
 import { Mail, Phone, MapPin } from "lucide-react";
-import Contact from "./Contact";
+// import Contact from "./Contact";
 import { useMediaQuery } from "../hooks/use-media-query";
 
 export default function Footer() {
@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold">Contact Us</h3>
+            <h3 className="text-lg font-bold">Contactáctanos</h3>
             <ul className="space-y-2">
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="w-4 h-4" />
@@ -38,7 +38,7 @@ export default function Footer() {
                 <span>Carretera Tasquillo-Ixmiquilpan Panales, 42326 Ixmiquilpan, Hgo.</span>
               </li>
             </ul>
-            <Contact className={"gap-2"} />
+            {/* <Contact className={"gap-2"} /> */}
           </div>
         </div>
 

@@ -79,7 +79,7 @@ const MessageBusinessEmail = ({
             <Hr className="border-gray-200 my-4" />
             <Text className="text-sm text-gray-500 text-center">
               Este mensaje fue enviado desde el formulario de contacto de Grupo
-              Bothi.
+              Bothi Multiservicios.
             </Text>
           </Container>
         </Body>

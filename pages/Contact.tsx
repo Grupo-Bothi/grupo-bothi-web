@@ -65,9 +65,9 @@ export default function Contact({ className }: ContactProps) {
           description: "Gracias por contactarnos. Te responderemos pronto.",
           variant: "default",
         });
-        reset();
-        setOpen(false);
       }
+      reset();
+      setOpen(false);
     } catch (error) {
       toast({
         title: "Error al enviar mensaje",
