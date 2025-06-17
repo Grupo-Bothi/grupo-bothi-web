@@ -12,35 +12,15 @@ export default function NuestroEquipo() {
       role: "Contratista general",
       image: "/equipo6.jpeg?height=600&width=450",
     },
-    {
+     {
       name: "Kevin Flores",
       role: "Contratista general",
-      image: "/equipo2.jpeg?height=600&width=450",
-    },
-    {
-      name: "Kevin Flores",
-      role: "Contratista general",
-      image: "/equipo2.jpeg?height=600&width=450",
-    },
-    {
-      name: "Kevin Flores",
-      role: "Contratista general",
-      image: "/equipo2.jpeg?height=600&width=450",
-    },
-    {
-      name: "Santiago Pastor",
-      role: "Contratista general",
-      image: "/equipo1.jpeg?height=600&width=450",
+      image: "/equipo4.jpeg?height=600&width=450",
     },
     {
       name: "Santiago Pastor",
       role: "Contratista general",
       image: "/equipo3.jpeg?height=600&width=450",
-    },
-    {
-      name: "Kevin Flores",
-      role: "Contratista general",
-      image: "/equipo4.jpeg?height=600&width=450",
     },
   ];
 

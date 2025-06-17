@@ -3,6 +3,7 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 import Contact from "./Contact";
 import { useMediaQuery } from "../hooks/use-media-query";
+import MapButton from "./MapPin";
 
 export default function Footer() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -38,7 +39,8 @@ export default function Footer() {
                 <span>Carretera Tasquillo-Ixmiquilpan Panales, 42326 Ixmiquilpan, Hgo.</span>
               </li>
             </ul>
-            <Contact className={"gap-2"} />
+            <Contact className={"gap-2 m-1"} />
+            <MapButton className={"gap-2 m-1"}></MapButton>
           </div>
         </div>
 
