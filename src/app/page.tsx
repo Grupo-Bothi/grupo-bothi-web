@@ -1,17 +1,25 @@
-import Header from "../../pages/Header";
-import Achievements from "../../pages/Achievements";
-import Services from "../../pages/Services";
-import WorkDone from "../../pages/WorkDone";
-import AreYouReady from "../../pages/AreYouReady";
-import OurTeam from "../../pages/OurTeam";
-import TestimonialSlider from "../../pages/TestimonialSlider";
-import Footer from "../../pages/Footer";
+import Header from "../../sections/Header";
+import Hero from "../../sections/Achievements";
+import Services from "../../sections/Services";
+import WorkDone from "../../sections/WorkDone";
+import AreYouReady from "../../sections/AreYouReady";
+import OurTeam from "../../sections/OurTeam";
+import Testimonials from "../../sections/TestimonialSlider";
+import Footer from "../../sections/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import Script from "next/script";
+import { getSiteImages } from "@/lib/site-images";
+import PullToRefresh from "@/components/PullToRefresh";
+
+// Always SSR so image changes from /admin are reflected immediately
+export const dynamic = "force-dynamic";
 
 export default function Home() {
+  const images = getSiteImages();
+
   return (
     <>
+      <PullToRefresh />
       <Script id="hotjar-tracking" strategy="afterInteractive">
         {`
           (function(h,o,t,j,a,r){
@@ -25,16 +33,12 @@ export default function Home() {
         `}
       </Script>
       <Header />
-      <div className="flex min-h-[80vh] items-center justify-center bg-[#2547a0]">
-        <div className="w-[90%] h-[70vh] mt-25">
-          <Achievements />
-        </div>
-      </div>
+      <Hero images={images.hero} />
       <Services />
-      <WorkDone />
-      <AreYouReady />
-      <OurTeam />
-      <TestimonialSlider />
+      <WorkDone projects={images.projects} />
+      <AreYouReady ctaUrl={images.cta.url} />
+      <OurTeam team={images.team} />
+      <Testimonials />
       <Footer />
       <Toaster />
     </>

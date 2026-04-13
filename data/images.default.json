@@ -1,0 +1,87 @@
+{
+  "hero": [
+    {
+      "id": "hero_1",
+      "url": "/achievements3.jpeg",
+      "label": "Hero - Slide 1"
+    },
+    {
+      "id": "hero_2",
+      "url": "/achievements2.jpeg",
+      "label": "Hero - Slide 2"
+    },
+    {
+      "id": "hero_3",
+      "url": "/achievements1.jpeg",
+      "label": "Hero - Slide 3"
+    },
+    {
+      "id": "hero_4",
+      "url": "/achievements4.jpeg",
+      "label": "Hero - Slide 4"
+    }
+  ],
+  "projects": [
+    {
+      "id": "project_1",
+      "url": "/trabajo1.jpeg",
+      "title": "La Casa Blanca",
+      "category": "Instalación Eléctrica"
+    },
+    {
+      "id": "project_2",
+      "url": "/trabajo2.jpeg",
+      "title": "Bar 'Jamadi'",
+      "category": "Instalación Eléctrica"
+    },
+    {
+      "id": "project_3",
+      "url": "/trabajo3.jpeg",
+      "title": "Bar 'El Despecho' Pachuca",
+      "category": "Instalación Eléctrica"
+    },
+    {
+      "id": "project_4",
+      "url": "/trabajo4.jpeg",
+      "title": "Residencial Las Lomas de la Plata",
+      "category": "Instalación Eléctrica"
+    },
+    {
+      "id": "project_5",
+      "url": "/trabajo5.jpeg",
+      "title": "Escuela Primaria Benito Juárez",
+      "category": "Aire Acondicionado"
+    }
+  ],
+  "team": [
+    {
+      "id": "team_1",
+      "url": "/equipo5.jpeg",
+      "name": "Juan Carlos Bothi",
+      "role": "Fundador"
+    },
+    {
+      "id": "team_2",
+      "url": "/equipo6.jpeg",
+      "name": "Mario Lopez",
+      "role": "Contratista General"
+    },
+    {
+      "id": "team_3",
+      "url": "/equipo4.jpeg",
+      "name": "Kevin Flores",
+      "role": "Contratista General"
+    },
+    {
+      "id": "team_4",
+      "url": "/equipo3.jpeg",
+      "name": "Santiago Pastor",
+      "role": "Contratista General"
+    }
+  ],
+  "cta": {
+    "id": "cta_1",
+    "url": "/areReady1.jpeg",
+    "label": "CTA Banner"
+  }
+}
