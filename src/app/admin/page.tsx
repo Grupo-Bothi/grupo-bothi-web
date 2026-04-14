@@ -61,7 +61,7 @@ function ImageCard({
     setLoading(true);
     const id = toast.loading("Subiendo imagen...");
     try {
-      const result = await uploadImage(file);
+      const result = await uploadImage(file, slot.id);
       onUploaded(slot.id, result.url);
       toast.success("Imagen actualizada", {
         id,

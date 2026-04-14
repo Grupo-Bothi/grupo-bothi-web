@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
 export type HeroImage = {
   id: string;
@@ -34,21 +34,89 @@ export type SiteImages = {
   cta: CtaImage;
 };
 
-const DATA_PATH = path.join(process.cwd(), "data", "images.json");
-const DEFAULT_PATH = path.join(process.cwd(), "data", "images.default.json");
+// ─── Metadata estática (nunca cambia) ────────────────────────────────────────
+const SLOT_META = {
+  hero: [
+    { id: "hero_1", label: "Hero - Slide 1" },
+    { id: "hero_2", label: "Hero - Slide 2" },
+    { id: "hero_3", label: "Hero - Slide 3" },
+    { id: "hero_4", label: "Hero - Slide 4" },
+  ],
+  projects: [
+    { id: "project_1", title: "La Casa Blanca", category: "Instalación Eléctrica" },
+    { id: "project_2", title: "Bar 'Jamadi'", category: "Instalación Eléctrica" },
+    { id: "project_3", title: "Bar 'El Despecho' Pachuca", category: "Instalación Eléctrica" },
+    { id: "project_4", title: "Residencial Las Lomas de la Plata", category: "Instalación Eléctrica" },
+    { id: "project_5", title: "Escuela Primaria Benito Juárez", category: "Aire Acondicionado" },
+  ],
+  team: [
+    { id: "team_1", name: "Juan Carlos Bothi", role: "Fundador" },
+    { id: "team_2", name: "Mario Lopez", role: "Contratista General" },
+    { id: "team_3", name: "Kevin Flores", role: "Contratista General" },
+    { id: "team_4", name: "Santiago Pastor", role: "Contratista General" },
+  ],
+  cta: { id: "cta_1", label: "CTA Banner" },
+};
 
-export function getSiteImages(): SiteImages {
-  const raw = fs.readFileSync(DATA_PATH, "utf-8");
-  return JSON.parse(raw);
+// ─── URLs por defecto (archivos en /public) ──────────────────────────────────
+const DEFAULT_URLS: Record<string, string> = {
+  hero_1: "/achievements3.jpeg",
+  hero_2: "/achievements2.jpeg",
+  hero_3: "/achievements1.jpeg",
+  hero_4: "/achievements4.jpeg",
+  project_1: "/trabajo1.jpeg",
+  project_2: "/trabajo2.jpeg",
+  project_3: "/trabajo3.jpeg",
+  project_4: "/trabajo4.jpeg",
+  project_5: "/trabajo5.jpeg",
+  team_1: "/equipo5.jpeg",
+  team_2: "/equipo6.jpeg",
+  team_3: "/equipo4.jpeg",
+  team_4: "/equipo3.jpeg",
+  cta_1: "/areReady1.jpeg",
+};
+
+type ApiUpload = {
+  id: string;
+  url: string;
+  filename: string;
+};
+
+export async function getSiteImages(): Promise<SiteImages> {
+  let urlMap: Record<string, string> = {};
+
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/uploads`, {
+      cache: "no-store",
+    });
+    if (res.ok) {
+      const uploads: ApiUpload[] = await res.json();
+      // Mapear por filename sin extensión: "hero_1.jpg" → "hero_1"
+      // Si hay duplicados (reemplazos), el último gana (más reciente)
+      for (const u of uploads) {
+        const slotId = u.filename.replace(/\.[^.]+$/, "");
+        urlMap[slotId] = u.url;
+      }
+    }
+  } catch {
+    // Si el API no responde, se usan las URLs por defecto
+  }
+
+  const getUrl = (id: string) => urlMap[id] ?? DEFAULT_URLS[id] ?? "";
+
+  return {
+    hero: SLOT_META.hero.map((s) => ({ ...s, url: getUrl(s.id) })),
+    projects: SLOT_META.projects.map((s) => ({ ...s, url: getUrl(s.id) })),
+    team: SLOT_META.team.map((s) => ({ ...s, url: getUrl(s.id) })),
+    cta: { ...SLOT_META.cta, url: getUrl(SLOT_META.cta.id) },
+  };
 }
 
-export function updateSiteImages(images: SiteImages): void {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(images, null, 2), "utf-8");
-}
-
-export function resetSiteImages(): SiteImages {
-  const raw = fs.readFileSync(DEFAULT_PATH, "utf-8");
-  const defaults: SiteImages = JSON.parse(raw);
-  fs.writeFileSync(DATA_PATH, JSON.stringify(defaults, null, 2), "utf-8");
-  return defaults;
+export function getDefaultImages(): SiteImages {
+  return {
+    hero: SLOT_META.hero.map((s) => ({ ...s, url: DEFAULT_URLS[s.id] ?? "" })),
+    projects: SLOT_META.projects.map((s) => ({ ...s, url: DEFAULT_URLS[s.id] ?? "" })),
+    team: SLOT_META.team.map((s) => ({ ...s, url: DEFAULT_URLS[s.id] ?? "" })),
+    cta: { ...SLOT_META.cta, url: DEFAULT_URLS[SLOT_META.cta.id] ?? "" },
+  };
 }

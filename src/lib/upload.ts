@@ -1,4 +1,4 @@
-const RAILS_API = "http://localhost:3000";
+const RAILS_API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
 export type UploadResponse = {
   id: string;
@@ -8,9 +8,19 @@ export type UploadResponse = {
   url: string;
 };
 
-export async function uploadImage(file: File): Promise<UploadResponse> {
+export async function uploadImage(
+  file: File,
+  slotId?: string,
+): Promise<UploadResponse> {
   const formData = new FormData();
-  formData.append("file", file);
+
+  if (slotId) {
+    const ext = file.name.split(".").pop() ?? "jpg";
+    const renamed = new File([file], `${slotId}.${ext}`, { type: file.type });
+    formData.append("file", renamed);
+  } else {
+    formData.append("file", file);
+  }
 
   const response = await fetch(`${RAILS_API}/api/v1/uploads`, {
     method: "POST",

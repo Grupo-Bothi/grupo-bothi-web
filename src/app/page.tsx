@@ -14,8 +14,8 @@ import PullToRefresh from "@/components/PullToRefresh";
 // Always SSR so image changes from /admin are reflected immediately
 export const dynamic = "force-dynamic";
 
-export default function Home() {
-  const images = getSiteImages();
+export default async function Home() {
+  const images = await getSiteImages();
 
   return (
     <>
