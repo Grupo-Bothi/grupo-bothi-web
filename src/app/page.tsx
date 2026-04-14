@@ -36,7 +36,7 @@ export default async function Home() {
       <Hero images={images.hero} />
       <Services />
       <WorkDone projects={images.projects} />
-      <AreYouReady ctaUrl={images.cta.url} />
+      <AreYouReady cta={images.cta} />
       <OurTeam team={images.team} />
       <Testimonials />
       <Footer />

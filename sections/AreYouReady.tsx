@@ -1,12 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Contact from "./Contact";
 import { Check } from "lucide-react";
 import { useInView } from "../hooks/use-in-view";
 import { cn } from "@/lib/utils";
-
-
+import type { CtaImage } from "../src/lib/site-images";
 
 const benefits = [
   "Atención personalizada para tu proyecto",
@@ -16,8 +16,19 @@ const benefits = [
   "Servicio de emergencias 24/7",
 ];
 
-export default function AreYouReady({ ctaUrl = "" }: { ctaUrl: string }) {
+export default function AreYouReady({ cta = [] }: { cta: CtaImage[] }) {
   const { ref, inView } = useInView();
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (cta.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % cta.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [cta.length]);
+
+  const activeUrl = cta[currentIndex]?.url ?? "";
 
   return (
     <section className="py-20 w-full bg-gradient-to-br from-[#2547a0] to-[#1a337d]">
@@ -33,15 +44,48 @@ export default function AreYouReady({ ctaUrl = "" }: { ctaUrl: string }) {
             )}
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src={ctaUrl}
-                unoptimized={ctaUrl.startsWith("http")}
-                width={500}
-                height={600}
-                alt="Técnico trabajando"
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a337d]/40 to-transparent" />
+              {/* Stacked images with fade transition */}
+              <div className="relative w-full" style={{ aspectRatio: "500/600" }}>
+                {cta.map((img, i) => (
+                  <Image
+                    key={img.id}
+                    src={img.url}
+                    unoptimized={img.url.startsWith("http")}
+                    fill
+                    alt={img.label}
+                    className={cn(
+                      "object-cover transition-opacity duration-1000",
+                      i === currentIndex ? "opacity-100" : "opacity-0"
+                    )}
+                    priority={i === 0}
+                    sizes="(max-width: 768px) 100vw, 500px"
+                  />
+                ))}
+                {/* Fallback for empty */}
+                {cta.length === 0 && (
+                  <div className="absolute inset-0 bg-[#1a337d]/30" />
+                )}
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a337d]/40 to-transparent pointer-events-none" />
+
+              {/* Dots — only if multiple images */}
+              {cta.length > 1 && (
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                  {cta.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentIndex(i)}
+                      aria-label={`Imagen ${i + 1}`}
+                      className={cn(
+                        "rounded-full transition-all duration-300",
+                        i === currentIndex
+                          ? "w-5 h-2 bg-white"
+                          : "w-2 h-2 bg-white/45 hover:bg-white/70"
+                      )}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

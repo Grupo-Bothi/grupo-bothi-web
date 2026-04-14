@@ -15,11 +15,14 @@ import { Badge } from "@/components/ui/badge";
 import { useInView } from "../hooks/use-in-view";
 import { cn } from "@/lib/utils";
 import type { ProjectImage } from "../src/lib/site-images";
+import ImageLightbox from "@/components/ImageLightbox";
+import type { LightboxImage } from "@/components/ImageLightbox";
 
 export default function WorkDone({ projects = [] }: { projects: ProjectImage[] }) {
   const [api, setApi] = useState<any>();
   const [current, setCurrent] = useState(0);
   const { ref, inView } = useInView();
+  const [lightbox, setLightbox] = useState<{ index: number } | null>(null);
 
   useEffect(() => {
     if (!api) return;
@@ -27,6 +30,11 @@ export default function WorkDone({ projects = [] }: { projects: ProjectImage[] }
     api.on("select", handleSelect);
     return () => api.off("select", handleSelect);
   }, [api]);
+
+  const lightboxImages: LightboxImage[] = projects.map((p) => ({
+    url: p.url,
+    alt: p.title,
+  }));
 
   return (
     <section id="proyectos" className="py-20 bg-white">
@@ -64,12 +72,15 @@ export default function WorkDone({ projects = [] }: { projects: ProjectImage[] }
             className="w-full"
           >
             <CarouselContent>
-              {projects.map((project) => (
+              {projects.map((project, i) => (
                 <CarouselItem
                   key={project.id}
                   className="md:basis-2/3 lg:basis-1/2 xl:basis-1/3 p-3"
                 >
-                  <Card className="overflow-hidden group border-none shadow-md hover:shadow-xl transition-shadow duration-300">
+                  <Card
+                    className="overflow-hidden group border-none shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                    onClick={() => setLightbox({ index: i })}
+                  >
                     <CardContent className="p-0">
                       <div className="relative h-64 w-full overflow-hidden">
                         <Image
@@ -81,6 +92,12 @@ export default function WorkDone({ projects = [] }: { projects: ProjectImage[] }
                           unoptimized={project.url.startsWith("http")}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                        {/* View hint */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/30">
+                            Ver imagen
+                          </span>
+                        </div>
                         <div className="absolute bottom-0 left-0 right-0 p-5">
                           <Badge className="mb-2 bg-[#2547a0] text-white border-none text-xs">
                             {project.category}
@@ -115,6 +132,15 @@ export default function WorkDone({ projects = [] }: { projects: ProjectImage[] }
           </div>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <ImageLightbox
+          images={lightboxImages}
+          initialIndex={lightbox.index}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </section>
   );
 }

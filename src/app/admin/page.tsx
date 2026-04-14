@@ -2,7 +2,14 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { Upload, Loader2, ImageIcon, RefreshCw, RotateCcw } from "lucide-react";
+import {
+  Upload,
+  Loader2,
+  ImageIcon,
+  RefreshCw,
+  RotateCcw,
+  PlusCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,19 +17,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster, toast } from "sonner";
 import { uploadImage } from "@/lib/upload";
+import { SLOT_META, MAX_IMAGES_PER_SECTION } from "@/lib/site-images";
 import type {
   SiteImages,
   HeroImage,
   ProjectImage,
   TeamMember,
+  CtaImage,
 } from "@/lib/site-images";
 
 // ─── Generic slot used in the UI ────────────────────────────────────────────
 type Slot = { id: string; url: string; label: string };
 
 function toSlots(
-  items: HeroImage[] | ProjectImage[] | TeamMember[],
-  section: "hero" | "projects" | "team",
+  items: HeroImage[] | ProjectImage[] | TeamMember[] | CtaImage[],
+  section: "hero" | "projects" | "team" | "cta",
 ): Slot[] {
   if (section === "hero")
     return (items as HeroImage[]).map((i) => ({
@@ -36,11 +45,27 @@ function toSlots(
       url: i.url,
       label: `${i.title} · ${i.category}`,
     }));
+  if (section === "cta")
+    return (items as CtaImage[]).map((i) => ({
+      id: i.id,
+      url: i.url,
+      label: i.label,
+    }));
   return (items as TeamMember[]).map((i) => ({
     id: i.id,
     url: i.url,
     label: `${i.name} · ${i.role}`,
   }));
+}
+
+/** Returns the next slot ID that hasn't been used yet in this section */
+function getNextSlotId(
+  section: "hero" | "projects" | "team" | "cta",
+  usedIds: string[],
+): string | null {
+  const meta = SLOT_META[section];
+  const next = meta.find((s) => !usedIds.includes(s.id));
+  return next ? next.id : null;
 }
 
 // ─── Single image card with upload ──────────────────────────────────────────
@@ -134,16 +159,74 @@ function ImageCard({
   );
 }
 
+// ─── Add image card ("+") ─────────────────────────────────────────────────
+function AddImageCard({ onAdd }: { onAdd: (file: File) => Promise<void> }) {
+  const [loading, setLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLoading(true);
+    try {
+      await onAdd(file);
+    } finally {
+      setLoading(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  };
+
+  return (
+    <Card
+      className="overflow-hidden border-2 border-dashed border-gray-300 hover:border-[#2547a0] transition-colors cursor-pointer group"
+      onClick={() => !loading && inputRef.current?.click()}
+    >
+      <CardContent className="p-0">
+        <div className="relative aspect-video bg-gray-50 group-hover:bg-blue-50 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 group-hover:text-[#2547a0]">
+          {loading ? (
+            <>
+              <Loader2 className="h-8 w-8 animate-spin" />
+              <span className="text-sm font-medium">Subiendo...</span>
+            </>
+          ) : (
+            <>
+              <PlusCircle className="h-10 w-10" />
+              <span className="text-sm font-medium">Agregar imagen</span>
+            </>
+          )}
+        </div>
+        <div className="p-3">
+          <p className="text-sm font-medium text-gray-400 truncate">
+            Nueva imagen
+          </p>
+        </div>
+      </CardContent>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFile}
+        disabled={loading}
+      />
+    </Card>
+  );
+}
+
 // ─── Section grid ────────────────────────────────────────────────────────────
 function SectionGrid({
   slots,
   section,
   onUploaded,
+  onAdded,
 }: {
   slots: Slot[];
-  section: "hero" | "projects" | "team";
+  section: "hero" | "projects" | "team" | "cta";
   onUploaded: (section: string, id: string, url: string) => void;
+  onAdded: (section: "hero" | "projects" | "team" | "cta", file: File) => Promise<void>;
 }) {
+  const canAdd = slots.length < MAX_IMAGES_PER_SECTION;
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {slots.map((slot) => (
@@ -153,6 +236,7 @@ function SectionGrid({
           onUploaded={(id, url) => onUploaded(section, id, url)}
         />
       ))}
+      {canAdd && <AddImageCard onAdd={(file) => onAdded(section, file)} />}
     </div>
   );
 }
@@ -320,7 +404,10 @@ export default function AdminPage() {
         team: images.team.map((t) => (t.id === id ? { ...t, url: newUrl } : t)),
       };
     } else if (section === "cta") {
-      updated = { ...images, cta: { ...images.cta, url: newUrl } };
+      updated = {
+        ...images,
+        cta: images.cta.map((c) => (c.id === id ? { ...c, url: newUrl } : c)),
+      };
     }
 
     setImages(updated);
@@ -343,8 +430,65 @@ export default function AdminPage() {
     }
   };
 
-  const handleCtaUploaded = (id: string, newUrl: string) => {
-    handleUploaded("cta", id, newUrl);
+  // ── Add new image to a section ──────────────────────────────────────────────
+  const handleAddImage = async (
+    section: "hero" | "projects" | "team" | "cta",
+    file: File,
+  ) => {
+    if (!images) return;
+
+    const usedIds = images[section].map((s) => s.id);
+    const nextId = getNextSlotId(section, usedIds);
+    if (!nextId) {
+      toast.error(`Límite alcanzado (máx. ${MAX_IMAGES_PER_SECTION} imágenes)`);
+      return;
+    }
+
+    const toastId = toast.loading("Subiendo imagen...");
+    try {
+      const result = await uploadImage(file, nextId);
+
+      let updated: SiteImages = { ...images };
+      if (section === "hero") {
+        const meta = SLOT_META.hero.find((s) => s.id === nextId)!;
+        updated = {
+          ...updated,
+          hero: [...updated.hero, { ...meta, url: result.url }],
+        };
+      } else if (section === "projects") {
+        const meta = SLOT_META.projects.find((s) => s.id === nextId)!;
+        updated = {
+          ...updated,
+          projects: [...updated.projects, { ...meta, url: result.url }],
+        };
+      } else if (section === "team") {
+        const meta = SLOT_META.team.find((s) => s.id === nextId)!;
+        updated = {
+          ...updated,
+          team: [...updated.team, { ...meta, url: result.url }],
+        };
+      } else if (section === "cta") {
+        const meta = SLOT_META.cta.find((s) => s.id === nextId)!;
+        updated = {
+          ...updated,
+          cta: [...updated.cta, { ...meta, url: result.url }],
+        };
+      }
+
+      setImages(updated);
+      toast.success("Imagen agregada", {
+        id: toastId,
+        description: result.filename,
+      });
+
+      // Invalidate landing page cache
+      await fetch("/api/site-images", { method: "PATCH" });
+    } catch (err) {
+      toast.error("Error al subir", {
+        id: toastId,
+        description: err instanceof Error ? err.message : "Inténtalo de nuevo",
+      });
+    }
   };
 
   const handleReset = async () => {
@@ -441,7 +585,7 @@ export default function AdminPage() {
             <div className="flex items-center gap-2 mb-6">
               <TabsList>
                 <TabsTrigger value="hero">
-                  Hero{" "}
+                  Trabajos{" "}
                   <Badge variant="secondary" className="ml-1.5">
                     {images.hero.length}
                   </Badge>
@@ -458,7 +602,12 @@ export default function AdminPage() {
                     {images.team.length}
                   </Badge>
                 </TabsTrigger>
-                <TabsTrigger value="cta">CTA</TabsTrigger>
+                <TabsTrigger value="cta">
+                  Ideas{" "}
+                  <Badge variant="secondary" className="ml-1.5">
+                    {images.cta.length}
+                  </Badge>
+                </TabsTrigger>
               </TabsList>
               <Button
                 variant="outline"
@@ -477,53 +626,54 @@ export default function AdminPage() {
             <TabsContent value="hero">
               <p className="text-sm text-muted-foreground mb-4">
                 Imágenes del carrusel en la sección principal (hero). Se rotan
-                automáticamente.
+                automáticamente. Máx. {MAX_IMAGES_PER_SECTION} imágenes.
               </p>
               <SectionGrid
                 slots={toSlots(images.hero, "hero")}
                 section="hero"
                 onUploaded={handleUploaded}
+                onAdded={handleAddImage}
               />
             </TabsContent>
 
             <TabsContent value="projects">
               <p className="text-sm text-muted-foreground mb-4">
                 Fotos de proyectos completados que aparecen en el carrusel de
-                portafolio.
+                portafolio. Máx. {MAX_IMAGES_PER_SECTION} imágenes.
               </p>
               <SectionGrid
                 slots={toSlots(images.projects, "projects")}
                 section="projects"
                 onUploaded={handleUploaded}
+                onAdded={handleAddImage}
               />
             </TabsContent>
 
             <TabsContent value="team">
               <p className="text-sm text-muted-foreground mb-4">
-                Fotos de los miembros del equipo.
+                Fotos de los miembros del equipo. Máx. {MAX_IMAGES_PER_SECTION}{" "}
+                imágenes.
               </p>
               <SectionGrid
                 slots={toSlots(images.team, "team")}
                 section="team"
                 onUploaded={handleUploaded}
+                onAdded={handleAddImage}
               />
             </TabsContent>
 
             <TabsContent value="cta">
               <p className="text-sm text-muted-foreground mb-4">
-                Imagen de la sección &quot;¿Estás listo para construir tu
-                visión?&quot;
+                Imágenes de la sección &quot;¿Estás listo para construir tu
+                visión?&quot; — se rotan automáticamente. Máx.{" "}
+                {MAX_IMAGES_PER_SECTION} imágenes.
               </p>
-              <div className="max-w-sm">
-                <ImageCard
-                  slot={{
-                    id: images.cta.id,
-                    url: images.cta.url,
-                    label: images.cta.label,
-                  }}
-                  onUploaded={handleCtaUploaded}
-                />
-              </div>
+              <SectionGrid
+                slots={toSlots(images.cta, "cta")}
+                section="cta"
+                onUploaded={handleUploaded}
+                onAdded={handleAddImage}
+              />
             </TabsContent>
           </Tabs>
         )}
