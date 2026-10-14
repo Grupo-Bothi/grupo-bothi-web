@@ -113,7 +113,7 @@ type ApiUpload = {
 };
 
 export async function getSiteImages(): Promise<SiteImages> {
-  let urlMap: Record<string, string> = {};
+  const urlMap: Record<string, string> = {};
 
   try {
     const res = await fetch(`${API_BASE}/api/v1/uploads`, {

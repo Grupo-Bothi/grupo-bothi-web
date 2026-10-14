@@ -64,7 +64,11 @@ export default function ImageLightbox({ images, initialIndex, onClose }: Props) 
     const dy = touchStartY.current - e.changedTouches[0].clientY;
     // Only swipe horizontally if horizontal movement dominates
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 48) {
-      dx > 0 ? next() : prev();
+      if (dx > 0) {
+        next();
+      } else {
+        prev();
+      }
     }
     touchStartX.current = null;
     touchStartY.current = null;

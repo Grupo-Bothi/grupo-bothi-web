@@ -28,8 +28,6 @@ export default function AreYouReady({ cta = [] }: { cta: CtaImage[] }) {
     return () => clearInterval(interval);
   }, [cta.length]);
 
-  const activeUrl = cta[currentIndex]?.url ?? "";
-
   return (
     <section className="py-20 w-full bg-gradient-to-br from-[#2547a0] to-[#1a337d]">
       <div className="container max-w-6xl mx-auto px-4">
