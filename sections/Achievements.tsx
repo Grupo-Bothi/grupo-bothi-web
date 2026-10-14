@@ -34,7 +34,7 @@ export default function Hero({ images = [] }: { images: HeroImage[] }) {
       setCurrentIndex((i) => (i + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
   return (
     <section className="relative h-screen min-h-[640px] w-full overflow-hidden">
