@@ -80,7 +80,7 @@ export default function Contact({ className }: ContactProps) {
     }
   }
 
-  const ContactForm = () => (
+  const contactForm = (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-4 py-4">
         <div className="grid gap-2">
@@ -149,7 +149,7 @@ export default function Contact({ className }: ContactProps) {
               </DrawerDescription>
             </DrawerHeader>
             <div className="px-4 pb-4">
-              <ContactForm />
+              {contactForm}
             </div>
           </DrawerContent>
         </Drawer>
@@ -169,7 +169,7 @@ export default function Contact({ className }: ContactProps) {
                 usted lo antes posible.
               </DialogDescription>
             </DialogHeader>
-            <ContactForm />
+            {contactForm}
           </DialogContent>
         </Dialog>
       )}
